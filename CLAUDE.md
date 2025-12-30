@@ -40,31 +40,84 @@ This project converts Hydro One Green Button XML exports to SQL statements for d
 - Raw cost ÷ 100,000 = CAD
 - TOU codes: 1=On-Peak, 2=Mid-Peak, 3=Off-Peak
 
-## Backfill Process (Critical Order)
-1. **Clear existing data first** - Required because cumulative sums will be wrong otherwise
-   ```sql
-   DELETE FROM statistics WHERE metadata_id IN
-     (SELECT id FROM statistics_meta WHERE statistic_id LIKE 'hydroone:%');
-   DELETE FROM statistics_short_term WHERE metadata_id IN
-     (SELECT id FROM statistics_meta WHERE statistic_id LIKE 'hydroone:%');
-   ```
-2. **Convert Green Button XML to SQL** using `greenbutton-to-sql.js`
-3. **Import SQL via phpMyAdmin** - May need to split large files
-4. **Verify import** - Check row counts and date ranges
+## Complete Backfill Process
 
-## Common Commands
+### Step 1: Download Green Button Data from Hydro One
+1. Log in to [Hydro One MyAccount](https://www.hydroone.com/myaccount)
+2. Navigate to **Usage** → **Download My Data**
+3. Select **Green Button XML** format
+4. Choose maximum date range (up to 2 years)
+5. Save XML file to `import/` folder
+
+### Step 2: Generate SQL (with merge if needed)
 ```bash
-# Convert with clear flag (recommended for fresh import)
-node greenbutton-to-sql.js import/file.xml export/output.sql --clear
+# If you have one XML file:
+node greenbutton-to-sql.js import/Hydro1_Electric_60_Minute_YYYY_YYYY.xml export/hydroone_DATERANGE.sql --clear
 
-# Convert without clearing (uses INSERT IGNORE for duplicates)
-node greenbutton-to-sql.js import/file.xml export/output.sql
+# If you have multiple XML files to merge (to maximize date coverage):
+node merge-greenbutton.js \
+  "import/Hydro1_Electric_60_Minute_12-30-2023_12-28-2025.xml" \
+  "import/Hydro1_Electric_60_Minute_12-14-2023_12-12-2025.xml" \
+  "export/hydroone_2023-12-14_to_2025-12-28_hourly_daily.sql" --clear
 ```
 
+### Step 3: Import via SSH (Recommended - avoids phpMyAdmin timeouts)
+```bash
+# Copy SQL to Home Assistant server
+scp export/hydroone_2023-12-14_to_2025-12-28_hourly_daily.sql homeassistant:/tmp/
+
+# Install MariaDB client (first time only)
+ssh homeassistant "apk add mariadb-client"
+
+# Run the import (password from /config/secrets.yaml mariadb_url)
+ssh homeassistant "mariadb -h core-mariadb -u homeassistant -p'CottageL1f3' --skip-ssl homeassistant < /tmp/hydroone_2023-12-14_to_2025-12-28_hourly_daily.sql"
+```
+
+### Step 4: Verify Import
+```bash
+# Check record counts by statistic
+ssh homeassistant "mariadb -h core-mariadb -u homeassistant -p'CottageL1f3' --skip-ssl homeassistant -e 'SELECT statistic_id, COUNT(*) as records FROM statistics s JOIN statistics_meta m ON s.metadata_id = m.id WHERE m.statistic_id LIKE \"hydroone:%\" GROUP BY statistic_id'"
+
+# Check date range
+ssh homeassistant "mariadb -h core-mariadb -u homeassistant -p'CottageL1f3' --skip-ssl homeassistant -e 'SELECT FROM_UNIXTIME(MIN(start_ts)) as earliest, FROM_UNIXTIME(MAX(start_ts)) as latest FROM statistics WHERE metadata_id IN (SELECT id FROM statistics_meta WHERE statistic_id LIKE \"hydroone:%\")'"
+```
+
+### Expected Results (as of 2025-12-30)
+| Statistic | Records |
+|-----------|---------|
+| hydroone:on_peak | 3,060 |
+| hydroone:mid_peak | 3,060 |
+| hydroone:off_peak | 11,772 |
+| hydroone:on_peak_cost | 3,060 |
+| hydroone:mid_peak_cost | 3,060 |
+| hydroone:off_peak_cost | 11,772 |
+| hydroone:daily_usage | 746 |
+| hydroone:daily_cost | 746 |
+| **Total** | **37,276** |
+
+Date range: 2023-12-14 to 2025-12-28
+
+## SSH Access Setup
+The `homeassistant` SSH alias should be configured in `~/.ssh/config`:
+```
+Host homeassistant
+    HostName <your-ha-ip>
+    User root
+    Port 22
+```
+
+## MariaDB Connection Details
+- **Host**: `core-mariadb` (Docker internal hostname)
+- **User**: `homeassistant`
+- **Password**: In `/config/secrets.yaml` → `mariadb_url`
+- **Database**: `homeassistant`
+- **Flag**: `--skip-ssl` required (HA's MariaDB addon doesn't use SSL internally)
+
 ## Troubleshooting
-- **Negative values in HA**: Caused by running incremental scraper on existing data. Must clear and reimport from scratch.
-- **phpMyAdmin timeout**: Split SQL file or use command line: `mysql -u homeassistant -p homeassistant < file.sql`
+- **Negative values in HA**: Caused by running incremental scraper on existing data. Must clear and reimport from scratch using `--clear` flag.
+- **phpMyAdmin timeout**: Use SSH direct import instead (see Step 3 above)
 - **Duplicate key errors**: Use `--clear` flag or manually delete existing data first
+- **SSL error**: Add `--skip-ssl` flag to mariadb command
 
 ## Dependencies
 - Node.js 14+

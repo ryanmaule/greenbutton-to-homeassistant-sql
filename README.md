@@ -33,9 +33,21 @@ npm install
 
 ## Usage
 
+### Single File Conversion
+
 ```bash
-node scripts/greenbutton-to-sql.js <input.xml> [output.sql] [--clear]
+node greenbutton-to-sql.js <input.xml> [output.sql] [--clear]
 ```
+
+### Merging Multiple Files
+
+Use `merge-greenbutton.js` when you have multiple XML exports and want to combine them (e.g., to get the maximum date range from overlapping exports):
+
+```bash
+node merge-greenbutton.js <primary.xml> <secondary.xml> [output.sql] [--clear]
+```
+
+The primary file takes precedence for overlapping dates; the secondary file fills in missing earlier/later dates.
 
 ### Arguments
 
@@ -88,25 +100,48 @@ The script generates SQL that creates 8 external statistics in Home Assistant:
 
 ## Importing to Home Assistant
 
-### Option 1: phpMyAdmin (Recommended)
+### Option 1: SSH Direct Import (Recommended)
+
+The most reliable method - bypasses phpMyAdmin timeout issues entirely.
+
+```bash
+# 1. Copy SQL file to Home Assistant server
+scp export/hydroone_2023-12-14_to_2025-12-28_hourly_daily.sql homeassistant:/tmp/
+
+# 2. SSH to Home Assistant and install MariaDB client (first time only)
+ssh homeassistant "apk add mariadb-client"
+
+# 3. Run the SQL import directly
+ssh homeassistant "mariadb -h core-mariadb -u homeassistant -p'YOUR_PASSWORD' --skip-ssl homeassistant < /tmp/hydroone_2023-12-14_to_2025-12-28_hourly_daily.sql"
+
+# 4. Verify the import
+ssh homeassistant "mariadb -h core-mariadb -u homeassistant -p'YOUR_PASSWORD' --skip-ssl homeassistant -e 'SELECT statistic_id, COUNT(*) FROM statistics s JOIN statistics_meta m ON s.metadata_id = m.id WHERE m.statistic_id LIKE \"hydroone:%\" GROUP BY statistic_id'"
+```
+
+**Note**: The MariaDB password is stored in `/config/secrets.yaml` on the Home Assistant server.
+
+### Option 2: phpMyAdmin (May Timeout)
 
 1. Open phpMyAdmin and select your Home Assistant database
 2. Go to the **SQL** tab
-3. If the generated SQL file is large (>1MB), split it into parts:
-   ```bash
-   # The script outputs batches of 500 records per INSERT
-   # Split the file if phpMyAdmin times out
-   ```
-4. Copy and paste the SQL contents
-5. Execute the SQL
+3. Copy and paste the SQL contents
+4. Execute the SQL
 
-### Option 2: Command Line (MariaDB/MySQL)
+**Warning**: Large SQL files (~4MB+) will often timeout in phpMyAdmin. Use Option 1 instead.
+
+### Option 3: Command Line from HA Container
+
+If you have SSH access to Home Assistant:
 
 ```bash
-mysql -u homeassistant -p homeassistant < backfill.sql
+# Install client if needed
+apk add mariadb-client
+
+# Run import (use --skip-ssl for HA's MariaDB addon)
+mariadb -h core-mariadb -u homeassistant -p'PASSWORD' --skip-ssl homeassistant < /tmp/backfill.sql
 ```
 
-### Option 3: SQLite (if using SQLite database)
+### Option 4: SQLite (if using SQLite database)
 
 ```bash
 sqlite3 /config/home-assistant_v2.db < backfill.sql
