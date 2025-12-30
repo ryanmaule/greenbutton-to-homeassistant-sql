@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xml:lang="en-us"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:schemaLocation="http://naesb.org/copyright/espi.xsd"
+	xmlns="http://www.w3.org/2005/Atom">
+	<title type="text">162.247.246.87 Green Button Batch feed</title>
+	<subtitle type="text"></subtitle>
+	<id>162.247.246.87</id>
+	<updated>2025-12-09T19:12:58Z</updated>
+	<link rel="self" href="https://162.247.246.87customer/Greenbutton.aspx" />
+	<entry>
+		<id>162.247.246.87</id>
+		<title type="text">Meter: J2648788 Daily Usage</title>
+		<published>2025-12-09T19:12:58Z</published>
+		<updated>2025-12-09T19:12:58Z</updated>
+		<link rel="self" href="/RetailCustomer/1/UsagePoint/J2648788" />
+		<link rel="up" href="/RetailCustomer/1/UsagePoint" />
+		<link rel="related" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading" />
+		<link rel="related" href="/LocalTimeParameters/01" />
+		<content type="text/xml">
+			<UsagePoint
+				xmlns="http://naesb.org/espi">
+				<ServiceCategory>
+					<kind>0</kind>
+				</ServiceCategory>
+			</UsagePoint>
+		</content>
+	</entry>
+	<entry>
+		<id>162.247.246.87</id>
+		<title type="text">DST For North America</title>
+		<published>2025-12-09T19:12:58Z</published>
+		<updated>2025-12-09T19:12:58Z</updated>
+		<link rel="self" href="/LocalTimeParameters/01" />
+		<link rel="up" href="/LocalTimeParameters" />
+		<content type="text/xml">
+			<LocalTimeParameters
+				xmlns="http://naesb.org/espi">
+				<dstEndRule>B40E2000</dstEndRule>
+				<dstOffset>3600</dstOffset>
+				<dstStartRule>360E2000</dstStartRule>
+				<tzOffset>-18000</tzOffset>
+			</LocalTimeParameters>
+		</content>
+	</entry>
+	<entry>
+		<id>162.247.246.87</id>
+		<title type="text">Energy Delivered (kwh)</title>
+		<published>2025-12-09T19:12:58Z</published>
+		<updated>2025-12-09T19:12:58Z</updated>
+		<link rel="self" href="/ReadingType/3" />
+		<link rel="up" href="/ReadingType" />
+		<content type="text/xml">
+			<ReadingType
+				xmlns="http://naesb.org/espi">
+				<accumulationBehaviour>4</accumulationBehaviour>
+				<commodity>1</commodity>
+				<currency>124</currency>
+				<dataQualifier>12</dataQualifier>
+				<flowDirection>1</flowDirection>
+				<intervalLength>3600</intervalLength>
+				<kind>12</kind>
+				<phase>0</phase>
+				<powerOfTenMultiplier>-3</powerOfTenMultiplier>
+				<tou>3</tou>
+				<uom>72</uom>
+			</ReadingType>
+		</content>
+	</entry>
+	<entry>
+		<id>162.247.246.87</id>
+		<title type="text">Daily Electricity Consumption</title>
+		<published>2025-12-09T19:12:58Z</published>
+		<updated>2025-12-09T19:12:58Z</updated>
+		<link rel="self" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/3" />
+		<link rel="up" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading" />
+		<link rel="related" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/3/IntervalBlock" />
+		<link rel="related" href="/ReadingType/3" />
+		<content type="text/xml">
+			<MeterReading
+				xmlns="http://naesb.org/espi" />
+			</content>
+		</entry>
+		<entry>
+			<id>162.247.246.87</id>
+			<title type="text"></title>
+			<published>2025-12-09T19:12:58Z</published>
+			<updated>2025-12-09T14:12:58-05:00</updated>
+			<link rel="self" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/3/IntervalBlock/3" />
+			<link rel="up" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/3/IntervalBlock" />
+			<content>
+				<IntervalBlock
+					xmlns="http://naesb.org/espi">
+					<interval>
+						<duration>86400</duration>
+						<start>1764997200</start>
+					</interval>
+					<IntervalReading>
+						<cost>634017</cost>
+						<timePeriod>
+							<duration>86400</duration>
+							<start>1764997200</start>
+						</timePeriod>
+						<value>64695600</value>
+					</IntervalReading>
+				</IntervalBlock>
+			</content>
+		</entry>
+		<entry>
+			<id>162.247.246.87</id>
+			<title type="text">Energy Delivered (kwh)</title>
+			<published>2025-12-09T19:12:58Z</published>
+			<updated>2025-12-09T19:12:58Z</updated>
+			<link rel="self" href="/ReadingType/1" />
+			<link rel="up" href="/ReadingType" />
+			<content type="text/xml">
+				<ReadingType
+					xmlns="http://naesb.org/espi">
+					<accumulationBehaviour>4</accumulationBehaviour>
+					<commodity>1</commodity>
+					<currency>124</currency>
+					<dataQualifier>12</dataQualifier>
+					<flowDirection>1</flowDirection>
+					<intervalLength>3600</intervalLength>
+					<kind>12</kind>
+					<phase>0</phase>
+					<powerOfTenMultiplier>-3</powerOfTenMultiplier>
+					<tou>1</tou>
+					<uom>72</uom>
+				</ReadingType>
+			</content>
+		</entry>
+		<entry>
+			<id>162.247.246.87</id>
+			<title type="text">Daily Electricity Consumption</title>
+			<published>2025-12-09T19:12:58Z</published>
+			<updated>2025-12-09T19:12:58Z</updated>
+			<link rel="self" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/1" />
+			<link rel="up" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading" />
+			<link rel="related" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/1/IntervalBlock" />
+			<link rel="related" href="/ReadingType/1" />
+			<content type="text/xml">
+				<MeterReading
+					xmlns="http://naesb.org/espi" />
+				</content>
+			</entry>
+			<entry>
+				<id>162.247.246.87</id>
+				<title type="text"></title>
+				<published>2025-12-09T19:12:58Z</published>
+				<updated>2025-12-09T14:12:58-05:00</updated>
+				<link rel="self" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/1/IntervalBlock/1" />
+				<link rel="up" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/1/IntervalBlock" />
+				<content>
+					<IntervalBlock
+						xmlns="http://naesb.org/espi">
+						<interval>
+							<duration>86400</duration>
+							<start>1764997200</start>
+						</interval>
+						<IntervalReading>
+							<cost>0</cost>
+							<timePeriod>
+								<duration>86400</duration>
+								<start>1764997200</start>
+							</timePeriod>
+							<value>0</value>
+						</IntervalReading>
+					</IntervalBlock>
+				</content>
+			</entry>
+			<entry>
+				<id>162.247.246.87</id>
+				<title type="text">Energy Delivered (kwh)</title>
+				<published>2025-12-09T19:12:58Z</published>
+				<updated>2025-12-09T19:12:58Z</updated>
+				<link rel="self" href="/ReadingType/2" />
+				<link rel="up" href="/ReadingType" />
+				<content type="text/xml">
+					<ReadingType
+						xmlns="http://naesb.org/espi">
+						<accumulationBehaviour>4</accumulationBehaviour>
+						<commodity>1</commodity>
+						<currency>124</currency>
+						<dataQualifier>12</dataQualifier>
+						<flowDirection>1</flowDirection>
+						<intervalLength>3600</intervalLength>
+						<kind>12</kind>
+						<phase>0</phase>
+						<powerOfTenMultiplier>-3</powerOfTenMultiplier>
+						<tou>2</tou>
+						<uom>72</uom>
+					</ReadingType>
+				</content>
+			</entry>
+			<entry>
+				<id>162.247.246.87</id>
+				<title type="text">Daily Electricity Consumption</title>
+				<published>2025-12-09T19:12:58Z</published>
+				<updated>2025-12-09T19:12:58Z</updated>
+				<link rel="self" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/2" />
+				<link rel="up" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading" />
+				<link rel="related" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/2/IntervalBlock" />
+				<link rel="related" href="/ReadingType/2" />
+				<content type="text/xml">
+					<MeterReading
+						xmlns="http://naesb.org/espi" />
+					</content>
+				</entry>
+				<entry>
+					<id>162.247.246.87</id>
+					<title type="text"></title>
+					<published>2025-12-09T19:12:58Z</published>
+					<updated>2025-12-09T14:12:58-05:00</updated>
+					<link rel="self" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/2/IntervalBlock/2" />
+					<link rel="up" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/2/IntervalBlock" />
+					<content>
+						<IntervalBlock
+							xmlns="http://naesb.org/espi">
+							<interval>
+								<duration>86400</duration>
+								<start>1764997200</start>
+							</interval>
+							<IntervalReading>
+								<cost>0</cost>
+								<timePeriod>
+									<duration>86400</duration>
+									<start>1764997200</start>
+								</timePeriod>
+								<value>0</value>
+							</IntervalReading>
+						</IntervalBlock>
+					</content>
+				</entry>
+				<entry>
+					<id>162.247.246.87</id>
+					<title type="text">Weather (kelvin)</title>
+					<published>2025-12-09T19:12:58Z</published>
+					<updated>2025-12-09T19:12:58Z</updated>
+					<link rel="self" href="/ReadingType/07" />
+					<link rel="up" href="/ReadingType" />
+					<content type="text/xml">
+						<ReadingType
+							xmlns="http://naesb.org/espi">
+							<intervalLength>3600</intervalLength>
+							<kind>46</kind>
+							<powerOfTenMultiplier>-3</powerOfTenMultiplier>
+							<uom>6</uom>
+						</ReadingType>
+					</content>
+				</entry>
+				<entry>
+					<id>162.247.246.87</id>
+					<title type="text">Daily Electricity Consumption</title>
+					<published>2025-12-09T19:12:58Z</published>
+					<updated>2025-12-09T19:12:58Z</updated>
+					<link rel="self" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/07" />
+					<link rel="up" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading" />
+					<link rel="related" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/07/IntervalBlock" />
+					<link rel="related" href="/ReadingType/07" />
+					<content type="text/xml">
+						<MeterReading
+							xmlns="http://naesb.org/espi" />
+						</content>
+					</entry>
+					<entry>
+						<id>162.247.246.87</id>
+						<title type="text"></title>
+						<published>2025-12-09T19:12:58Z</published>
+						<updated>2025-12-09T14:12:58-05:00</updated>
+						<link rel="self" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/07/IntervalBlock/07" />
+						<link rel="up" href="/RetailCustomer/1/UsagePoint/J2648788/MeterReading/07/IntervalBlock" />
+						<content>
+							<IntervalBlock
+								xmlns="http://naesb.org/espi">
+								<interval>
+									<duration>86400</duration>
+									<start>1764997200</start>
+								</interval>
+								<IntervalReading>
+									<timePeriod>
+										<duration>86400</duration>
+										<start>1764997200</start>
+									</timePeriod>
+									<value>270600</value>
+								</IntervalReading>
+							</IntervalBlock>
+						</content>
+					</entry>
+				</feed>
