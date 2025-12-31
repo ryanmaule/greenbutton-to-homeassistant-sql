@@ -1,17 +1,17 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node *)",
-      "Bash(npm *)",
-      "Bash(git *)",
-      "Bash(ssh homeassistant *)",
-      "Bash(scp * homeassistant:*)",
-      "Bash(ls *)",
-      "Bash(mkdir *)",
-      "Bash(wc *)",
-      "Bash(cat *)",
-      "Bash(head *)",
-      "Bash(tail *)"
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(git:*)",
+      "Bash(ssh homeassistant:*)",
+      "Bash(scp homeassistant:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(wc:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)"
     ]
   }
 }
